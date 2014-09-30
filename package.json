@@ -8,6 +8,7 @@
 		"test": "grunt ci"
 	},
 	"dependencies": {
+		"async": "~0.2.5",
 		"underscore": "~1.7.0",
 
 		"sgs-crypto": "git+ssh://git@github.com:Sagacify/sgs-crypto.git",
@@ -16,7 +17,7 @@
 		"passport-http-bearer": "~1.0.1",
 		"passport-facebook": "~1.0.3",
 		"passport-local": "~1.0.0",
-		"passport": "~0.2.1",
+		"passport": "~0.2.1"
 	},
 	"devDependencies": {
 		"mocha": "~1.21.4",

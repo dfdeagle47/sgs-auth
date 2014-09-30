@@ -10,13 +10,19 @@ module.exports = (function () {
 
 		config = _.extend({}, config);
 
+		this.name = 'google-login';
+
 		passport.use(
-			'google-login',
+			this.name,
 			new PassportGoogle(
 				config
 				// LOGIN LOGIC
 			)
 		);
+
+		return passport.authenticate(this.name, {
+			session: false
+		});
 
 	}
 

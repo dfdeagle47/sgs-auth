@@ -3,12 +3,14 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	function LocalVerifyPassword (config) {
+	function BearerLogout (config) {
 
 		config = _.extend({}, config);
 
+		this.name = 'bearer-logout';
+
 	}
 
-	return LocalVerifyPassword;
+	return BearerLogout;
 
 })();

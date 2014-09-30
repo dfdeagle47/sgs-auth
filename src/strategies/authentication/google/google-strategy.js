@@ -1,4 +1,4 @@
-var GoogleLogin = require('./google-login');
+var GoogleLogin = require('./actions/google-login');
 
 var _ = require('underscore');
 
@@ -7,7 +7,7 @@ module.exports = (function () {
 
 	function GoogleStrategy (app, config) {
 
-		this.provider = 'google';
+		this.strategy = 'google';
 
 		config = _.extend({
 			login: {}

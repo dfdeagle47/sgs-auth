@@ -10,13 +10,19 @@ module.exports = (function () {
 
 		config = _.extend({}, config);
 
+		this.name = 'bearer-authorize';
+
 		passport.use(
-			'bearer-authorize',
+			this.name,
 			new PassportBearer(
 				config
 				// AUTHORIZE LOGIC
 			)
 		);
+
+		return passport.authenticate(this.name, {
+			session: false
+		});
 
 	}
 

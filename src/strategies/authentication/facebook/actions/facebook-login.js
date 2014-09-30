@@ -10,6 +10,8 @@ module.exports = (function () {
 
 		config = _.extend({}, config);
 
+		this.name = 'google-login';
+
 		passport.use(
 			'facebook-login',
 			new PassportFacebook(
@@ -17,6 +19,10 @@ module.exports = (function () {
 				// LOGIN LOGIC
 			)
 		);
+
+		return passport.authenticate(this.name, {
+			session: false
+		});
 
 	}
 

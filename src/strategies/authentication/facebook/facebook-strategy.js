@@ -1,4 +1,4 @@
-var FacebookLogin = require('./facebook-login');
+var FacebookLogin = require('./actions/facebook-login');
 
 var _ = require('underscore');
 
@@ -7,7 +7,7 @@ module.exports = (function () {
 
 	function FacebookStrategy (app, config) {
 
-		this.provider = 'facebook';
+		this.stategy = 'facebook';
 
 		config = _.extend({
 			login: {}

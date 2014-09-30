@@ -1,5 +1,7 @@
-var BearerAuthorize = require('./bearer-authorize');
-var BearerLogout = require('./bearer-logout');
+var BearerAuthorize = require('./actions/bearer-authorize');
+var BearerLogout = require('./actions/bearer-logout');
+
+var BearerCompareToken = require('./steps/bearer-compare-token');
 
 var _ = require('underscore');
 
@@ -15,8 +17,14 @@ module.exports = (function () {
 			logout: {}
 		}, config);
 
-		this.authorize = new BearerAuthorize(config.authorize);
-		this.logout = new BearerLogout(config.logout);
+		this.actions = {
+			authorize: new BearerAuthorize(config.authorize),
+			logout: new BearerLogout(config.logout)
+		};
+
+		this.steps = {
+			compareToken: new BearerCompareToken(config.compareToken)
+		};
 
 	}
 

@@ -10,13 +10,19 @@ module.exports = (function () {
 
 		config = _.extend({}, config);
 
+		this.name = 'local-login';
+
 		passport.use(
-			'local-login',
+			this.name,
 			new PassportLocal(
-				config
-				// LOGIN LOGIC
+				config,
+				this.run.bind(this)
 			)
 		);
+
+		return passport.authenticate(this.name, {
+			session: false
+		});
 
 	}
 

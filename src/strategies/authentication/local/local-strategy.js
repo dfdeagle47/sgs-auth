@@ -1,17 +1,20 @@
-var LocalChangePassword = require('./local-change-password');
-var LocalResetPassword = require('./local-reset-password');
-var LocalVerifyEmail = require('./local-verify-email');
-var LocalRegister = require('./local-register');
-var LocalLogin = require('./local-login');
+var LocalChangePassword = require('./actions/local-change-password');
+var LocalResetPassword = require('./actions/local-reset-password');
+var LocalVerifyEmail = require('./actions/local-verify-email');
+var LocalRegister = require('./actions/local-register');
+var LocalLogin = require('./actions/local-login');
+
+var LocalComparePassword = require('./steps/local-compare-password');
+var LocalHashPassword = require('./steps/local-hash-password');
 
 var _ = require('underscore');
 
 module.exports = (function () {
 	'use strict';
 
-	function FacebookStrategy (app, config) {
+	function LocalStrategy (app, config) {
 
-		this.provider = 'facebook';
+		this.strategy = 'local';
 
 		config = _.extend({
 			changePassword: {},
@@ -29,8 +32,13 @@ module.exports = (function () {
 			login: new LocalLogin(config.login)
 		};
 
+		this.steps = {
+			comparePassword: new LocalComparePassword(config.comparePassword),
+			hashPassword: new LocalHashPassword(config.hashPassword)
+		};
+
 	}
 
-	return FacebookStrategy;
+	return LocalStrategy;
 
 })();
