@@ -30,7 +30,7 @@ module.exports = (function () {
 		},
 
 		findUserByToken: function (mixin, callback) {
-			var hashedToken = mixin.data.hashedToken;
+			var hashedToken = mixin.data.tokenHash;
 
 			var users = Users.filter(function (user) {
 				return !!user.accounts.filter(function (account) {
@@ -39,7 +39,8 @@ module.exports = (function () {
 			});
 
 			if(!(users && users.length)) {
-				return callback('NO_USER');
+				// return callback('NO_USER');
+				return callback(null, mixin);
 			}
 
 			var user = users[0];

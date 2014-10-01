@@ -12,7 +12,7 @@ var express = require('express');
 
 var request = supertest('http://localhost:8000');
 
-describe('Testing the auth. module', function () {
+describe('Testing the auth. module:', function () {
 	'use strict';
 
 
@@ -73,7 +73,7 @@ describe('Testing the auth. module', function () {
 		.on('listening', callback);
 	});
 
-	it('Register', function (callback) {
+	it('- register', function (callback) {
 		request
 		.post('/auth/local/register')
 		.send({
@@ -91,7 +91,7 @@ describe('Testing the auth. module', function () {
 		});
 	});
 
-	it('Verify Email', function (callback) {
+	it('- verify email', function (callback) {
 		request
 		.post('/auth/local/verify_email')
 		.send({
@@ -111,10 +111,10 @@ describe('Testing the auth. module', function () {
 	});
 
 
-	it('Verify Email', function (callback) {
+	it('- authorize', function (callback) {
 		request
 		.get('/auth/bearer/authorize')
-		.set('Authorization', World.apiToken)
+		.set('Authorization', 'bearer ' + World.apiToken)
 		.expect(200, callback);
 	});
 
