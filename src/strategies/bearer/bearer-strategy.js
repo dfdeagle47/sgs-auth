@@ -22,7 +22,7 @@ module.exports = (function () {
 		}, config);
 
 		this.actions = {
-			// authorize: new BearerAuthorize(config.authorize),
+			authorize: new BearerAuthorize(config.authorize),
 			// logout: new BearerLogout(config.logout)
 		};
 

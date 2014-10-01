@@ -16,7 +16,7 @@ module.exports = (function () {
 			})[0];
 
 			var passwordHash = localAccountIn.password;
-			var password = mixin.dataIn.password;
+			var password = mixin.data.password;
 
 			Hash.comparePassword(password, passwordHash, function (e, match) {
 				if(e) {

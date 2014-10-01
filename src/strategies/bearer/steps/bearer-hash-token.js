@@ -11,7 +11,7 @@ module.exports = (function () {
 		config = _.extend({}, config);
 
 		return function (mixin, callback) {
-			var token = mixin.dataOut.token;
+			var token = mixin.data.token;
 
 			Hash.hashToken(token, function (e, tokenHash) {
 				if(e) {
@@ -23,7 +23,7 @@ module.exports = (function () {
 					);
 				}
 
-				mixin.dataOut.tokenHash = tokenHash;
+				mixin.data.tokenHash = tokenHash;
 
 				callback(null, mixin);
 			});

@@ -11,7 +11,7 @@ module.exports = (function () {
 		config = _.extend({}, config);
 
 		return function (mixin, callback) {
-			var password = mixin.dataIn.password;
+			var password = mixin.data.password;
 
 			Hash.hashPassword(password, function (e, passwordHash) {
 				if(e) {
@@ -23,7 +23,7 @@ module.exports = (function () {
 					);
 				}
 
-				mixin.dataOut.passwordHash = passwordHash;
+				mixin.data.passwordHash = passwordHash;
 
 				callback(null, mixin);
 			});

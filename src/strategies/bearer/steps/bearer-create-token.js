@@ -21,7 +21,7 @@ module.exports = (function () {
 					);
 				}
 
-				mixin.dataOut.token = token;
+				mixin.data.token = token;
 
 				callback(null, mixin);
 			});

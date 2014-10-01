@@ -16,7 +16,7 @@ module.exports = (function () {
 				expiration: expiration,
 				strategy: 'bearer',
 
-				token: mixin.dataOut.tokenHash
+				token: mixin.data.tokenHash
 			};
 
 			mixin.accounts.push(newBearerAccount);

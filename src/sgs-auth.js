@@ -60,7 +60,6 @@ module.exports = (function () {
 	}
 
 	SGSAuth.prototype.with = function (strategyName, actionName) {
-		// return this.strategies[strategyName].actions[actionName];
 		return passport.authenticate(strategyName + '-' + actionName, {
 			session: false
 		});

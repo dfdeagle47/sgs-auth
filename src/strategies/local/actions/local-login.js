@@ -1,5 +1,4 @@
 var PassportLocal = require('passport-local').Strategy;
-var passport = require('passport');
 
 var _ = require('underscore');
 
@@ -28,7 +27,6 @@ module.exports = (function () {
 		'validateState',
 
 		'comparePassword',
-		'addLocalAccount',
 
 		'createToken',
 		'hashToken',
@@ -48,11 +46,11 @@ module.exports = (function () {
 				stateIn: this.stateIn,
 				stateOut: this.stateOut
 			},
-			dataIn: {
+			data: {
 				username: username,
 				password: password
 			},
-			dataOut: {},
+			accounts: []
 		};
 
 		return callback(null, mixin);

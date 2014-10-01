@@ -12,7 +12,7 @@ module.exports = (function () {
 		config = _.extend({}, config);
 
 		return function (mixin, callback) {
-			var token = mixin.dataIn.token;
+			var token = mixin.data.token;
 			var bearerAccounts = mixin.accounts.filter(function (account) {
 				return account.strategy === 'bearer';
 			});

@@ -16,8 +16,8 @@ module.exports = (function () {
 				expiration: expiration,
 				strategy: 'local',
 
-				password: mixin.dataOut.passwordHash,
-				email: mixin.dataIn.email
+				password: mixin.data.passwordHash,
+				username: mixin.data.username
 			};
 
 			mixin.stateOut = 'initial';

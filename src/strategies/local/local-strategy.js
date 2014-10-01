@@ -28,8 +28,8 @@ module.exports = (function () {
 		this.actions = {
 			// changePassword: new LocalChangePassword(config.changePassword),
 			// resetPassword: new LocalResetPassword(config.resetPassword),
-			// verifyEmail: new LocalVerifyEmail(config.verifyEmail),
-			// register: new LocalRegister(config.register),
+			verifyEmail: new LocalVerifyEmail(config.verifyEmail),
+			register: new LocalRegister(config.register),
 			login: new LocalLogin(config.login)
 		};
 
