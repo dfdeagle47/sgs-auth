@@ -13,11 +13,14 @@ module.exports = (function () {
 			var expiration = new Date(8640000000000000);
 
 			var newBearerAccount = {
-				email: mixin.dataIn.email,
-				password: mixin.dataOut.passwordHash,
+				expiration: expiration,
 				strategy: 'local',
-				expiration: expiration
+
+				password: mixin.dataOut.passwordHash,
+				email: mixin.dataIn.email
 			};
+
+			mixin.stateOut = 'initial';
 
 			mixin.accounts.push(newBearerAccount);
 

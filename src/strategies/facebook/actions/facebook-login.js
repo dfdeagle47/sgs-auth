@@ -8,7 +8,7 @@ module.exports = (function () {
 
 	function FacebookLogin (config) {
 
-		config = _.extend({}, config);
+		this.config = _.extend({}, config);
 
 		this.name = 'google-login';
 

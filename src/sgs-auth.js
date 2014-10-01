@@ -3,8 +3,9 @@ var GoogleStrategy = require('./strategies/google/google-strategy');
 var BearerStrategy = require('./strategies/bearer/bearer-strategy');
 var LocalStrategy = require('./strategies/local/local-strategy');
 
-var CommonSteps = require('./common-steps/common-validate-state');
+var CommonSteps = require('./common-steps/common-steps');
 
+var passport = require('passport');
 var async = require('async');
 var _ = require('underscore');
 
@@ -12,6 +13,8 @@ module.exports = (function () {
 	'use strict';
 
 	function SGSAuth (Delegates, config) {
+
+		var me = this;
 
 		config = config || {};
 
@@ -35,25 +38,36 @@ module.exports = (function () {
 		this.steps = _.extend(
 			{},
 			CommonSteps,
-			Delegates,
-			_.map(this.strategies, function (strategy) {
-				return strategy.steps;
-			})
+			Delegates
 		);
+
+		_.each(this.strategies, function (strategy) {
+			return _.extend(me.steps, strategy.steps);
+		});
+
+		_.each(this.strategies, function (strategy) {
+			_.each(strategy.actions, function (action) {
+				passport.use(
+					action.name,
+					new (action.passportStrategy)(
+						action.config,
+						me.run(action)
+					)
+				);
+			});
+		});
 
 	}
 
 	SGSAuth.prototype.with = function (strategyName, actionName) {
-		return this.strategies[strategyName].actions[actionName];
+		// return this.strategies[strategyName].actions[actionName];
+		return passport.authenticate(strategyName + '-' + actionName, {
+			session: false
+		});
 	};
 
-	SGSAuth.prototype.stub = function (strategyName, actionName) {
-		var strategy = this.strategies[strategyName].actions[actionName];
-		return this.run(strategy, true);
-	};
-
-	SGSAuth.prototype.run = function (strategy, stubMode) {
-		var steps = _.map(strategy.specs.steps, function (stepName) {
+	SGSAuth.prototype.run = function (action) {
+		var steps = _.map(action.steps, function (stepName) {
 			return this.steps[stepName];
 		}.bind(this));
 
@@ -68,8 +82,8 @@ module.exports = (function () {
 			async.waterfall(
 				[].concat(
 					initializer,
-					stubMode ? [] : strategy.parser.bind(strategy),
-					strategy.mapper.bind(strategy),
+					// action.parser.bind(action),
+					action.mapper.bind(action),
 					steps
 				),
 				callback

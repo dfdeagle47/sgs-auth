@@ -5,7 +5,7 @@ module.exports = (function () {
 
 	function BearerLogout (config) {
 
-		config = _.extend({}, config);
+		this.config = _.extend({}, config);
 
 		this.name = 'bearer-logout';
 

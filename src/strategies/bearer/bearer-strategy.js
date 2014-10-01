@@ -22,8 +22,8 @@ module.exports = (function () {
 		}, config);
 
 		this.actions = {
-			authorize: new BearerAuthorize(config.authorize),
-			logout: new BearerLogout(config.logout)
+			// authorize: new BearerAuthorize(config.authorize),
+			// logout: new BearerLogout(config.logout)
 		};
 
 		this.steps = {

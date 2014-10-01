@@ -39,7 +39,7 @@ module.exports = (function () {
 
 	function LocalChangePassword (config) {
 
-		config = _.extend({}, config);
+		this.config = _.extend({}, config);
 
 		this.name = 'local-change-password';
 

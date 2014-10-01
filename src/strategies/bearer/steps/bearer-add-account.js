@@ -13,9 +13,10 @@ module.exports = (function () {
 			var expiration = 1000 * 60 * 60 * 24 * 14;
 
 			var newBearerAccount = {
-				token: mixin.dataOut.tokenHash,
+				expiration: expiration,
 				strategy: 'bearer',
-				expiration: expiration
+
+				token: mixin.dataOut.tokenHash
 			};
 
 			mixin.accounts.push(newBearerAccount);

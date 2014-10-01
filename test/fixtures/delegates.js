@@ -1,4 +1,14 @@
-var Users = [];
+var Users = [{
+	id: 0,
+	state: 'registered',
+	accounts: [{
+		expiration: new Date(8640000000000000),
+		strategy: 'local',
+
+		password: '$2a$10$ipckRAzgF52Z1W4dGmiAl.6SxGCEHPQPIvlREqEQ56ffXlmaASEVy',
+		email: 'test@example.com',
+	}]
+}];
 
 module.exports = (function () {
 	'use strict';
@@ -19,9 +29,20 @@ module.exports = (function () {
 				user = users[0];
 
 				mixin.accounts = user.accounts;
+				mixin.stateIn = user.state;
 			}
 
 			mixin.user = user;
+
+			callback(null, mixin);
+		},
+
+		saveUser: function (mixin, callback) {
+			var user = mixin.user;
+			user.accounts = mixin.accounts;
+			user.state = mixin.stateOut;
+
+			Users[user.id] = user;
 
 			callback(null, mixin);
 		}

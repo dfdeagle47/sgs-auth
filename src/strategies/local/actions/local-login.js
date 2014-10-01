@@ -8,44 +8,36 @@ module.exports = (function () {
 
 	function LocalLogin (config) {
 
-		config = _.extend({}, config);
-
-		this.name = 'local-login';
-
-		passport.use(
-			this.name,
-			new PassportLocal(
-				config,
-				this.run.bind(this)
-			)
-		);
-
-		return passport.authenticate(this.name, {
-			session: false
-		});
+		this.config = _.extend({}, config);
 
 	}
 
-	LocalLogin.prototype.specs = {
-		stateIn: 'initial',
-		steps: [
-			'findUserByUsername',
+	LocalLogin.prototype.passportStrategy = PassportLocal;
 
-			'validateState',
+	LocalLogin.prototype.name = 'local-login';
 
-			'comparePassword',
-			'addLocalAccount',
+	LocalLogin.prototype.stateIn = [
+		'registered'
+	];
 
-			'createToken',
-			'hashToken',
-			'addBearerAccount',
+	LocalLogin.prototype.stateOut = 'registered';
 
-			'updateState',
+	LocalLogin.prototype.steps = [
+		'findUserByUsername',
 
-			'saveUser'
-		],
-		stateOut: 'registering'
-	};
+		'validateState',
+
+		'comparePassword',
+		'addLocalAccount',
+
+		'createToken',
+		'hashToken',
+		'addBearerAccount',
+
+		'updateState',
+
+		'saveUser'
+	];
 
 	LocalLogin.prototype.parser = null;
 
@@ -53,8 +45,8 @@ module.exports = (function () {
 		var mixin = {
 			user: null,
 			specs: {
-				stateIn: this.specs.stateIn,
-				stateOut: this.specs.stateOut
+				stateIn: this.stateIn,
+				stateOut: this.stateOut
 			},
 			dataIn: {
 				username: username,

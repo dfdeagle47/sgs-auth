@@ -5,7 +5,7 @@ module.exports = (function () {
 
 	function LocalResetPassword (config) {
 
-		config = _.extend({}, config);
+		this.config = _.extend({}, config);
 
 		this.name = 'local-reset-password';
 

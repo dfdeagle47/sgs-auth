@@ -5,7 +5,7 @@ module.exports = (function () {
 
 	function LocalVerifyEmail (config) {
 
-		config = _.extend({}, config);
+		this.config = _.extend({}, config);
 
 		this.name = 'local-verify-email';
 

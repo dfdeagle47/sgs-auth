@@ -21,7 +21,10 @@
 	},
 	"devDependencies": {
 		"mocha": "~1.21.4",
+		"express": "~4.8.8",
+		"supertest": "~0.13.0",
 		"grunt-cli": "~0.1.13",
+		"body-parser": "^1.8.1",
 		"load-grunt-tasks": "~0.6.0",
 		"grunt-contrib-jshint": "~0.10.0",
 		"grunt-contrib-clean": "~0.6.0",
