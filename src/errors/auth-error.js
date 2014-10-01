@@ -4,11 +4,11 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	function AuthenticationError (properties) {
+	function AuthError (properties) {
 
 		Error.call(this);
 
-		this.type = 'AuthenticationError';
+		this.type = 'AuthError';
 
 		properties = _.extend({
 			step: null,
@@ -21,8 +21,8 @@ module.exports = (function () {
 
 	}
 
-	util.inherits(AuthenticationError, Error);
+	util.inherits(AuthError, Error);
 
-	return AuthenticationError;
+	return AuthError;
 
 })();

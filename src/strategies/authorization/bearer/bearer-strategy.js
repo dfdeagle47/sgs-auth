@@ -2,6 +2,8 @@ var BearerAuthorize = require('./actions/bearer-authorize');
 var BearerLogout = require('./actions/bearer-logout');
 
 var BearerCompareToken = require('./steps/bearer-compare-token');
+var BearerCreateToken = require('./steps/bearer-create-token');
+var BearerHashToken = require('./steps/bearer-hash-token');
 
 var _ = require('underscore');
 
@@ -23,7 +25,9 @@ module.exports = (function () {
 		};
 
 		this.steps = {
-			compareToken: new BearerCompareToken(config.compareToken)
+			compareToken: new BearerCompareToken(config.compareToken),
+			createToken: new BearerCreateToken(config.createToken),
+			hashToken: new BearerHashToken(config.hashToken)
 		};
 
 	}

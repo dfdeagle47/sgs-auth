@@ -8,35 +8,39 @@ module.exports = (function () {
 
 	function Action () {}
 
-	Action.prototype.run = function () {// PASS SPECS
-		var args = Array.apply(null, arguments); // TODO
-		var callback = args.pop();
-
+	Action.prototype.run = function () {
 		var me = this;
-		async.waterfall([
-			function (cb) {
-				me.find(args, cb);
-			},
-			function (accounts, cb) {
-				cb((accounts || '').length ? null : 'NO_USER_FOUND', accounts);
-			},
-			function (accounts, cb) {
-				me.steps(accounts, cb);
-			},
-			function (accounts, cb) {
-				me.save(accounts, cb);
-			}
-		], function (e, user) {
-			if(e === 'NO_USER_FOUND') {
-				return callback(null, false);
-			}
 
-			if(e) {
-				return callback(e);
-			}
+		return function () {
+			var args = Array.apply(null, arguments); // TODO
+			var callback = args.pop();
 
-			return callback(null, user);
-		});
+			async.waterfall([
+				function (cb) {
+					me.find(args, cb);
+				},
+				function (accounts, cb) {
+					cb((accounts || '').length ? null : 'NO_USER_FOUND', accounts);
+				},
+				function (accounts, cb) {
+					var steps = me.wrapSteps(accounts, me.steps);
+					async.waterfall(steps, cb);
+				},
+				function (accounts, cb) {
+					me.save(accounts, cb);
+				}
+			], function (e, user) {
+				if(e === 'NO_USER_FOUND') {
+					return callback(null, false);
+				}
+
+				if(e) {
+					return callback(e);
+				}
+
+				return callback(null, user);
+			});
+		};
 	};
 
 	Action.prototype.find = function (args, callback) { // TODO select fields
@@ -49,11 +53,6 @@ module.exports = (function () {
 
 	Action.prototype.save = function (accounts, callback) { // TODO pass user too
 		DatabaseDelegate.save(accounts, callback);
-	};
-
-	Action.prototype.steps = function (accounts, callback) {
-		var steps = this.wrapSteps(accounts, this._steps);
-		async.waterfall(steps, callback);
 	};
 
 	Action.prototype.wrapSteps = function (accounts, steps) {

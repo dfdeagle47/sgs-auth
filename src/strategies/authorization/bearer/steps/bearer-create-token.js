@@ -6,24 +6,22 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	function LocalHashPassword (config) {
+	function BearerCreateToken (config) {
 
 		config = _.extend({}, config);
 
 		return function (accounts, data, callback) {
-			var password = data.password;
-
-			Hash.hashPassword(password, function (e, passwordHash) {
+			Hash.genereateToken(function (e, token) {
 				if(e) {
-					return callback(
+					callback(
 						new AuthError({
-							step: 'hashPassword',
-							message: 'HASHING_ERROR'
+							step: 'createToken',
+							message: 'TOKEN_CREATION_ERROR'
 						})
 					);
 				}
 
-				data.password = passwordHash;
+				data.token = token;
 
 				callback(null, accounts, data);
 			});
@@ -31,6 +29,6 @@ module.exports = (function () {
 
 	}
 
-	return LocalHashPassword;
+	return BearerCreateToken;
 
 })();

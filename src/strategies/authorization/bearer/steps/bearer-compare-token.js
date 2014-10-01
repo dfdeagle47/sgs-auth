@@ -1,4 +1,4 @@
-var AuthenticationError = require('../../../../errors/authentication-error');
+var AuthError = require('../../../../errors/auth-error');
 var Hash = require('sgs-crypto').Hash;
 
 var async = require('async');
@@ -23,7 +23,7 @@ module.exports = (function () {
 			}, function (e, match) {
 				if(e) {
 					return callback(
-						new AuthenticationError({
+						new AuthError({
 							step: 'compareToken',
 							message: 'COMPARISON_ERROR'
 						})
@@ -32,14 +32,14 @@ module.exports = (function () {
 
 				if(match !== true) {
 					return callback(
-						new AuthenticationError({
+						new AuthError({
 							step: 'compareToken',
 							message: 'TOKENS_DONT_MATCH'
 						})
 					);
 				}
 
-				return callback(null, accounts, data);
+				callback(null, accounts, data);
 			});
 		};
 

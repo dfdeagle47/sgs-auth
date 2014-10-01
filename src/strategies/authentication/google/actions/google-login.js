@@ -15,8 +15,8 @@ module.exports = (function () {
 		passport.use(
 			this.name,
 			new PassportGoogle(
-				config
-				// LOGIN LOGIC
+				config,
+				this.run.bind(this)
 			)
 		);
 
@@ -25,6 +25,10 @@ module.exports = (function () {
 		});
 
 	}
+
+	GoogleLogin.prototype.run = function (accessToken, refreshToken, rawToken, profile, callback) {
+		callback(null, false);
+	};
 
 	return GoogleLogin;
 

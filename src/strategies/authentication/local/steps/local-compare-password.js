@@ -1,4 +1,4 @@
-var AuthenticationError = require('../../../../errors/authentication-error');
+var AuthError = require('../../../../errors/auth-error');
 var Hash = require('sgs-crypto').Hash;
 
 var _ = require('underscore');
@@ -18,7 +18,7 @@ module.exports = (function () {
 			Hash.comparePassword(password, passwordHash, function (e, match) {
 				if(e) {
 					return callback(
-						new AuthenticationError({
+						new AuthError({
 							step: 'comparePassword',
 							message: 'COMPARISON_ERROR'
 						})
@@ -27,14 +27,14 @@ module.exports = (function () {
 
 				if(match !== true) {
 					return callback(
-						new AuthenticationError({
+						new AuthError({
 							step: 'comparePassword',
 							message: 'PASSWORD_DOESNT_MATCH'
 						})
 					);
 				}
 
-				return callback(null, accounts, data);
+				callback(null, accounts, data);
 			});
 		};
 

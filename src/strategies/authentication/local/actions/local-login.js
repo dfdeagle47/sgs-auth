@@ -26,6 +26,17 @@ module.exports = (function () {
 
 	}
 
+	LocalLogin.prototype.run = function (username, password, callback) {
+		callback(null, false);
+	};
+
+	LocalLogin.prototype.steps = [
+		{ strategy: 'local', step: 'comparePassword' },
+		{ strategy: 'bearer', step: 'createToken' },
+		{ strategy: 'bearer', step: 'hashToken' },
+		{ strategy: 'bearer', step: 'addToken' }
+	];
+
 	return LocalLogin;
 
 })();

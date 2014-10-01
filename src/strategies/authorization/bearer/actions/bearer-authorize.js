@@ -15,8 +15,8 @@ module.exports = (function () {
 		passport.use(
 			this.name,
 			new PassportBearer(
-				config
-				// AUTHORIZE LOGIC
+				config,
+				this.run.bind(this)
 			)
 		);
 
@@ -25,6 +25,10 @@ module.exports = (function () {
 		});
 
 	}
+
+	BearerAuthorize.prototype.run = function (accessToken, refreshToken, rawToken, profile, callback) {
+		callback(null, false);
+	};
 
 	return BearerAuthorize;
 
