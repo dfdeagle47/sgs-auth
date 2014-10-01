@@ -6,36 +6,36 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	function PassportChangePassword (options, verify) {
+	// function PassportChangePassword (options, verify) {
 
-		this._verify = verify;
+	// 	this._verify = verify;
 
-	}
+	// }
 
-	util.inherits(PassportChangePassword, passport.Strategy);
+	// util.inherits(PassportChangePassword, passport.Strategy);
 
-	PassportChangePassword.prototype.authenticate = function (req, options) {
-		if(!req.body || !req.body.password || !req.body.newPassword) {
-			return this.fail(401);
-		}
+	// PassportChangePassword.prototype.authenticate = function (req, options) {
+	// 	if(!req.body || !req.body.password || !req.body.newPassword) {
+	// 		return this.fail(401);
+	// 	}
 
-		var newPassword = req.body.newPassword;
-		var password = req.body.password;
+	// 	var newPassword = req.body.newPassword;
+	// 	var password = req.body.password;
 
-		var me = this;
+	// 	var me = this;
 
-		this._verify(password, newPassword, function (e, user) {
-			if(e) {
-				return me.error(e);
-			}
+	// 	this._verify(password, newPassword, function (e, user) {
+	// 		if(e) {
+	// 			return me.error(e);
+	// 		}
 
-			if(!user) {
-				return me.fail();
-			}
+	// 		if(!user) {
+	// 			return me.fail();
+	// 		}
 
-			me.success(user);
-		});
-	};
+	// 		me.success(user);
+	// 	});
+	// };
 
 	function LocalChangePassword (config) {
 
@@ -43,17 +43,17 @@ module.exports = (function () {
 
 		this.name = 'local-change-password';
 
-		passport.use(
-			this.name,
-			new PassportChangePassword(
-				config,
-				this.run.bind(this)
-			)
-		);
+		// passport.use(
+		// 	this.name,
+		// 	new PassportChangePassword(
+		// 		config,
+		// 		this.run.bind(this)
+		// 	)
+		// );
 
-		return passport.authenticate(this.name, {
-			session: false
-		});
+		// return passport.authenticate(this.name, {
+		// 	session: false
+		// });
 
 	}
 

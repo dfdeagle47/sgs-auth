@@ -1,33 +1,39 @@
+var _ = require('underscore');
+
 module.exports = (function () {
 	'use strict';
 
-	function BearerRemoveInvalidTokens (mixin, callback) {
+	function BearerRemoveInvalidTokens (config) {
 
-		// Maximum tokens is set to 10 concurrent clients.
-		// This paramter will be configurable in the future.
-		var maxTokens = 10;
+		config = _.extend({}, config);
 
-		var bearerAccounts = [];
-		mixin.accounts = mixin.accounts.filter(function (account) {
-			if(account.strategy === 'bearer') {
+		return function (mixin, callback) {
+			// Maximum tokens is set to 10 concurrent clients.
+			// This paramter will be configurable in the future.
+			var maxTokens = 10;
 
-				if(account.expiration < Date.now()) {
-					bearerAccounts.push(account);
+			var bearerAccounts = [];
+			mixin.accounts = mixin.accounts.filter(function (account) {
+				if(account.strategy === 'bearer') {
+
+					if(account.expiration < Date.now()) {
+						bearerAccounts.push(account);
+					}
+
+					return false;
 				}
 
-				return false;
-			}
+				return true;
+			});
 
-			return true;
-		});
+			bearerAccounts.sort(function (accountA, accountB) {
+				return accountB.expiration - accountA.expiration;
+			}).splice(maxTokens);
 
-		bearerAccounts.sort(function (accountA, accountB) {
-			return accountB.expiration - accountA.expiration;
-		}).splice(maxTokens);
+			mixin.accounts = mixin.accounts.concat(bearerAccounts);
 
-		mixin.accounts = mixin.accounts.concat(bearerAccounts);
-
-		callback(null, mixin);
+			callback(null, mixin);
+		};
 
 	}
 

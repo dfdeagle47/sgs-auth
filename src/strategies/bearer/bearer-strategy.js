@@ -27,11 +27,11 @@ module.exports = (function () {
 		};
 
 		this.steps = {
-			removeInvalidTokens: new BearerRemoveInvalidTokens(),
-			addBearerAccount: new BearerAddAccount(),
-			compareToken: new BearerCompareToken(),
-			createToken: new BearerCreateToken(),
-			hashToken: new BearerHashToken()
+			removeInvalidTokens: new BearerRemoveInvalidTokens({}),
+			addBearerAccount: new BearerAddAccount({}),
+			compareToken: new BearerCompareToken({}),
+			createToken: new BearerCreateToken({}),
+			hashToken: new BearerHashToken({})
 		};
 
 	}

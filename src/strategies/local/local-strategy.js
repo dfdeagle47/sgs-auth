@@ -34,9 +34,9 @@ module.exports = (function () {
 		};
 
 		this.steps = {
-			comparePassword: new LocalComparePassword(),
-			addLocalAccount: new LocalAddAccount(),
-			hashPassword: new LocalHashPassword()
+			comparePassword: new LocalComparePassword({}),
+			addLocalAccount: new LocalAddAccount({}),
+			hashPassword: new LocalHashPassword({})
 		};
 
 	}

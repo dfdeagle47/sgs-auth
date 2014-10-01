@@ -1,39 +1,45 @@
-var AuthError = require('../../../../errors/auth-error');
+var AuthError = require('../../../errors/auth-error');
 var Hash = require('sgs-crypto').Hash;
+
+var _ = require('underscore');
 
 module.exports = (function () {
 	'use strict';
 
-	function LocalComparePassword (mixin, callback) {
+	function LocalComparePassword (config) {
 
-		var localAccountIn = mixin.accounts.filter(function (account) {
-			return account.strategy === 'local';
-		})[0];
+		config = _.extend({}, config);
 
-		var passwordHash = localAccountIn.password;
-		var password = mixin.dataIn.password;
+		return function (mixin, callback) {
+			var localAccountIn = mixin.accounts.filter(function (account) {
+				return account.strategy === 'local';
+			})[0];
 
-		Hash.comparePassword(password, passwordHash, function (e, match) {
-			if(e) {
-				return callback(
-					new AuthError({
-						step: 'comparePassword',
-						message: 'COMPARISON_ERROR'
-					})
-				);
-			}
+			var passwordHash = localAccountIn.password;
+			var password = mixin.dataIn.password;
 
-			if(match !== true) {
-				return callback(
-					new AuthError({
-						step: 'comparePassword',
-						message: 'PASSWORD_DOESNT_MATCH'
-					})
-				);
-			}
+			Hash.comparePassword(password, passwordHash, function (e, match) {
+				if(e) {
+					return callback(
+						new AuthError({
+							step: 'comparePassword',
+							message: 'COMPARISON_ERROR'
+						})
+					);
+				}
 
-			callback(null, mixin);
-		});
+				if(match !== true) {
+					return callback(
+						new AuthError({
+							step: 'comparePassword',
+							message: 'PASSWORD_DOESNT_MATCH'
+						})
+					);
+				}
+
+				callback(null, mixin);
+			});
+		};
 
 	}
 

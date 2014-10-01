@@ -26,26 +26,45 @@ module.exports = (function () {
 
 	}
 
-	LocalLogin.prototype.run = function (username, password, callback) {
-		callback(null, false);
+	LocalLogin.prototype.specs = {
+		stateIn: 'initial',
+		steps: [
+			'findUserByUsername',
+
+			'validateState',
+
+			'comparePassword',
+			'addLocalAccount',
+
+			'createToken',
+			'hashToken',
+			'addBearerAccount',
+
+			'updateState',
+
+			'saveUser'
+		],
+		stateOut: 'registering'
 	};
 
-	LocalLogin.prototype.steps = [
-		'findUserByLocal',
+	LocalLogin.prototype.parser = null;
 
-		'validateState',
+	LocalLogin.prototype.mapper = function (username, password, callback) {
+		var mixin = {
+			user: null,
+			specs: {
+				stateIn: this.specs.stateIn,
+				stateOut: this.specs.stateOut
+			},
+			dataIn: {
+				username: username,
+				password: password
+			},
+			dataOut: {},
+		};
 
-		'comparePassword',
-		'addLocalAccount',
-
-		'createToken',
-		'hashToken',
-		'addBearerAccount',
-
-		'updateState',
-
-		'saveUser'
-	];
+		return callback(null, mixin);
+	};
 
 	return LocalLogin;
 

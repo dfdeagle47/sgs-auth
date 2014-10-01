@@ -1,47 +1,52 @@
-var AuthError = require('../../../../errors/auth-error');
+var AuthError = require('../../../errors/auth-error');
 var Hash = require('sgs-crypto').Hash;
 
 var async = require('async');
+var _ = require('underscore');
 
 module.exports = (function () {
 	'use strict';
 
-	function BearerCompareToken (mixin, callback) {
+	function BearerCompareToken (config) {
 
-		var token = mixin.dataIn.token;
-		var bearerAccounts = mixin.accounts.filter(function (account) {
-			return account.strategy === 'bearer';
-		});
+		config = _.extend({}, config);
 
-		async.reduce(bearerAccounts, false, function (match, account, cb) {
-			var tokenHash = account.token;
+		return function (mixin, callback) {
+			var token = mixin.dataIn.token;
+			var bearerAccounts = mixin.accounts.filter(function (account) {
+				return account.strategy === 'bearer';
+			});
 
-			if(match !== false) {
-				return cb(match);
-			}
+			async.reduce(bearerAccounts, false, function (match, account, cb) {
+				var tokenHash = account.token;
 
-			Hash.compareToken(token, tokenHash, cb);
-		}, function (e, match) {
-			if(e) {
-				return callback(
-					new AuthError({
-						step: 'compareToken',
-						message: 'COMPARISON_ERROR'
-					})
-				);
-			}
+				if(match !== false) {
+					return cb(match);
+				}
 
-			if(match !== true) {
-				return callback(
-					new AuthError({
-						step: 'compareToken',
-						message: 'TOKENS_DONT_MATCH'
-					})
-				);
-			}
+				Hash.compareToken(token, tokenHash, cb);
+			}, function (e, match) {
+				if(e) {
+					return callback(
+						new AuthError({
+							step: 'compareToken',
+							message: 'COMPARISON_ERROR'
+						})
+					);
+				}
 
-			callback(null, mixin);
-		});
+				if(match !== true) {
+					return callback(
+						new AuthError({
+							step: 'compareToken',
+							message: 'TOKENS_DONT_MATCH'
+						})
+					);
+				}
+
+				callback(null, mixin);
+			});
+		};
 
 	}
 

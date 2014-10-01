@@ -47,18 +47,33 @@ module.exports = (function () {
 		return this.strategies[strategyName].actions[actionName];
 	};
 
-	SGSAuth.prototype.run = function (stepNames) {
-		var steps = _.map(stepNames, function (stepName) {
+	SGSAuth.prototype.stub = function (strategyName, actionName) {
+		var strategy = this.strategies[strategyName].actions[actionName];
+		return this.run(strategy, true);
+	};
+
+	SGSAuth.prototype.run = function (strategy, stubMode) {
+		var steps = _.map(strategy.specs.steps, function (stepName) {
 			return this.steps[stepName];
 		}.bind(this));
 
 		return function () {
 			var args = Array.apply(null, arguments);
 			var callback = args.pop();
-			var initializeData = function (cb) {
+
+			var initializer = function (cb) {
 				return cb.apply(null, [null].concat(args));
 			};
-			async.waterfall([initializeData].concat(steps), callback);
+
+			async.waterfall(
+				[].concat(
+					initializer,
+					stubMode ? [] : strategy.parser.bind(strategy),
+					strategy.mapper.bind(strategy),
+					steps
+				),
+				callback
+			);
 		};
 	};
 

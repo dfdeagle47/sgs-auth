@@ -1,21 +1,27 @@
+var _ = require('underscore');
+
 module.exports = (function () {
 	'use strict';
 
-	function BearerAddAccount (mixin, callback) {
+	function BearerAddAccount (config) {
 
-		// Expiration is set at two weeks.
-		// This paramter will be configurable in the future.
-		var expiration = 1000 * 60 * 60 * 24 * 14;
+		config = _.extend({}, config);
 
-		var newBearerAccount = {
-			token: mixin.dataOut.tokenHash,
-			strategy: 'bearer',
-			expiration: expiration
+		return function (mixin, callback) {
+			// Expiration is set at two weeks.
+			// This paramter will be configurable in the future.
+			var expiration = 1000 * 60 * 60 * 24 * 14;
+
+			var newBearerAccount = {
+				token: mixin.dataOut.tokenHash,
+				strategy: 'bearer',
+				expiration: expiration
+			};
+
+			mixin.accounts.push(newBearerAccount);
+
+			callback(null, mixin);
 		};
-
-		mixin.accounts.push(newBearerAccount);
-
-		callback(null, mixin);
 
 	}
 

@@ -1,27 +1,33 @@
-var AuthError = require('../../../../errors/auth-error');
+var AuthError = require('../../../errors/auth-error');
 var Hash = require('sgs-crypto').Hash;
+
+var _ = require('underscore');
 
 module.exports = (function () {
 	'use strict';
 
-	function BearerHashToken (mixin, callback) {
+	function BearerHashToken (config) {
 
-		var token = mixin.dataOut.token;
+		config = _.extend({}, config);
 
-		Hash.hashToken(token, function (e, tokenHash) {
-			if(e) {
-				return callback(
-					new AuthError({
-						step: 'hashToken',
-						message: 'TOKEN_HASHING_ERROR'
-					})
-				);
-			}
+		return function (mixin, callback) {
+			var token = mixin.dataOut.token;
 
-			mixin.dataOut.tokenHash = tokenHash;
+			Hash.hashToken(token, function (e, tokenHash) {
+				if(e) {
+					return callback(
+						new AuthError({
+							step: 'hashToken',
+							message: 'TOKEN_HASHING_ERROR'
+						})
+					);
+				}
 
-			callback(null, mixin);
-		});
+				mixin.dataOut.tokenHash = tokenHash;
+
+				callback(null, mixin);
+			});
+		};
 
 	}
 
