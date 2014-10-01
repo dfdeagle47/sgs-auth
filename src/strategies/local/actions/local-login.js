@@ -31,10 +31,20 @@ module.exports = (function () {
 	};
 
 	LocalLogin.prototype.steps = [
-		{ strategy: 'local', step: 'comparePassword' },
-		{ strategy: 'bearer', step: 'createToken' },
-		{ strategy: 'bearer', step: 'hashToken' },
-		{ strategy: 'bearer', step: 'addToken' }
+		'findUserByLocal',
+
+		'validateState',
+
+		'comparePassword',
+		'addLocalAccount',
+
+		'createToken',
+		'hashToken',
+		'addBearerAccount',
+
+		'updateState',
+
+		'saveUser'
 	];
 
 	return LocalLogin;

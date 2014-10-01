@@ -1,8 +1,10 @@
 var BearerAuthorize = require('./actions/bearer-authorize');
 var BearerLogout = require('./actions/bearer-logout');
 
+var BearerRemoveInvalidTokens = require('./steps/bearer-remove-invalid-tokens');
 var BearerCompareToken = require('./steps/bearer-compare-token');
 var BearerCreateToken = require('./steps/bearer-create-token');
+var BearerAddAccount = require('./steps/bearer-add-account');
 var BearerHashToken = require('./steps/bearer-hash-token');
 
 var _ = require('underscore');
@@ -10,7 +12,7 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	function BearerStrategy (app, config) {
+	function BearerStrategy (config) {
 
 		this.provider = 'google';
 
@@ -25,9 +27,11 @@ module.exports = (function () {
 		};
 
 		this.steps = {
-			compareToken: new BearerCompareToken(config.compareToken),
-			createToken: new BearerCreateToken(config.createToken),
-			hashToken: new BearerHashToken(config.hashToken)
+			removeInvalidTokens: new BearerRemoveInvalidTokens(),
+			addBearerAccount: new BearerAddAccount(),
+			compareToken: new BearerCompareToken(),
+			createToken: new BearerCreateToken(),
+			hashToken: new BearerHashToken()
 		};
 
 	}

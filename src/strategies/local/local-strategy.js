@@ -6,13 +6,14 @@ var LocalLogin = require('./actions/local-login');
 
 var LocalComparePassword = require('./steps/local-compare-password');
 var LocalHashPassword = require('./steps/local-hash-password');
+var LocalAddAccount = require('./steps/local-add-account');
 
 var _ = require('underscore');
 
 module.exports = (function () {
 	'use strict';
 
-	function LocalStrategy (app, config) {
+	function LocalStrategy (config) {
 
 		this.strategy = 'local';
 
@@ -33,8 +34,9 @@ module.exports = (function () {
 		};
 
 		this.steps = {
-			comparePassword: new LocalComparePassword(config.comparePassword),
-			hashPassword: new LocalHashPassword(config.hashPassword)
+			comparePassword: new LocalComparePassword(),
+			addLocalAccount: new LocalAddAccount(),
+			hashPassword: new LocalHashPassword()
 		};
 
 	}

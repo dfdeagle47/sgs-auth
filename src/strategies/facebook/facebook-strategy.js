@@ -5,7 +5,7 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	function FacebookStrategy (app, config) {
+	function FacebookStrategy (config) {
 
 		this.stategy = 'facebook';
 

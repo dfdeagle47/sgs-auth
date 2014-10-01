@@ -5,7 +5,7 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	function GoogleStrategy (app, config) {
+	function GoogleStrategy (config) {
 
 		this.strategy = 'google';
 
