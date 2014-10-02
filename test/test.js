@@ -60,9 +60,28 @@ describe('Testing the auth. module:', function () {
 			}
 		);
 
+		app.get(
+			'/auth/bearer/logout',
+			global.sgsAuth.with('bearer', 'logout'),
+			function (req, res) {
+				res.status(200).end();
+			}
+		);
+
 		app.post(
 			'/auth/local/login',
 			global.sgsAuth.with('local', 'login'),
+			function (req, res) {
+				res.status(200).json({
+					token: req.user.data.token
+				});
+			}
+		);
+
+		app.post(
+			'/auth/local/change_password',
+			global.sgsAuth.with('bearer', 'authorize'),
+			global.sgsAuth.with('local', 'changePassword'),
 			function (req, res) {
 				res.status(200).end();
 			}
@@ -118,14 +137,41 @@ describe('Testing the auth. module:', function () {
 		.expect(200, callback);
 	});
 
-	// it('Login', function (callback) {
-	// 	request
-	// 	.post('/auth/local/login')
-	// 	.send({
-	// 		username: World.user.username,
-	// 		password: World.user.password
-	// 	})
-	// 	.expect(200, callback);
-	// });
+	it('- logout', function (callback) {
+		request
+		.get('/auth/bearer/logout')
+		.set('Authorization', 'bearer ' + World.apiToken)
+		.expect(200, callback);
+	});
+
+	it('- login', function (callback) {
+		request
+		.post('/auth/local/login')
+		.send({
+			username: World.user.username,
+			password: World.user.password
+		})
+		.expect(200)
+		.end(function (e, res) {
+			if(e) {
+				return callback(e);
+			}
+
+			World.apiToken = res.body.token;
+			callback(null);
+		});
+	});
+
+	it('- change password', function (callback) {
+		request
+		.post('/auth/local/change_password')
+		.set('Authorization', 'bearer ' + World.apiToken)
+		.send({
+			username: World.user.username,
+			password: World.user.password,
+			newPassword: World.user.newPassword
+		})
+		.expect(200, callback);
+	});
 
 });

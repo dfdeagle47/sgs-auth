@@ -65,6 +65,7 @@ module.exports = (function () {
 		'createToken',
 		'hashToken',
 		'addBearerAccount',
+		'removeInvalidTokens',
 
 		'updateState',
 

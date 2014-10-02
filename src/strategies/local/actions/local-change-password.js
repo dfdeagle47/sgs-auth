@@ -6,56 +6,93 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	// function PassportChangePassword (options, verify) {
+	/**
+	 * PARSER - STARTER
+	 */
 
-	// 	this._verify = verify;
+	function PassportChangePassword (options, verify) {
 
-	// }
+		passport.Strategy.call(this);
 
-	// util.inherits(PassportChangePassword, passport.Strategy);
+		this._verify = verify;
 
-	// PassportChangePassword.prototype.authenticate = function (req, options) {
-	// 	if(!req.body || !req.body.password || !req.body.newPassword) {
-	// 		return this.fail(401);
-	// 	}
+	}
 
-	// 	var newPassword = req.body.newPassword;
-	// 	var password = req.body.password;
+	util.inherits(PassportChangePassword, passport.Strategy);
 
-	// 	var me = this;
+	PassportChangePassword.prototype.authenticate = function (req) {
+		var username = req.body.username;
+		var password = req.body.password;
+		var newPassword = req.body.newPassword;
 
-	// 	this._verify(password, newPassword, function (e, user) {
-	// 		if(e) {
-	// 			return me.error(e);
-	// 		}
+		this._verify(username, password, newPassword, function (e, user) {
+			if(e) {
+				return this.error(e);
+			}
 
-	// 		if(!user) {
-	// 			return me.fail();
-	// 		}
+			this.success(user);
+		}.bind(this));
+	};
 
-	// 		me.success(user);
-	// 	});
-	// };
+	/**
+	 * PARSER - END
+	 */
 
 	function LocalChangePassword (config) {
 
 		this.config = _.extend({}, config);
 
-		this.name = 'local-change-password';
-
-		// passport.use(
-		// 	this.name,
-		// 	new PassportChangePassword(
-		// 		config,
-		// 		this.run.bind(this)
-		// 	)
-		// );
-
-		// return passport.authenticate(this.name, {
-		// 	session: false
-		// });
-
 	}
+
+	LocalChangePassword.prototype.passportStrategy = PassportChangePassword;
+
+	LocalChangePassword.prototype.name = 'local-changePassword';
+
+	LocalChangePassword.prototype.stateIn = [
+		'registered'
+	];
+
+	LocalChangePassword.prototype.stateOut = 'registered';
+
+	LocalChangePassword.prototype.steps = [
+		'findUserByUsername',
+
+		'validateState',
+
+		'comparePassword',
+
+		'hashPassword',
+		'addLocalAccount',
+	
+		'createToken',
+		'hashToken',
+		'addBearerAccount',
+		'removeInvalidTokens',
+
+		'updateState',
+
+		'saveUser'
+	];
+
+	LocalChangePassword.prototype.parser = null;
+
+	LocalChangePassword.prototype.mapper = function (username, password, newPassword, callback) {
+		var mixin = {
+			user: null,
+			specs: {
+				stateIn: this.stateIn,
+				stateOut: this.stateOut
+			},
+			data: {
+				username: username,
+				password: password,
+				newPassword: newPassword
+			},
+			accounts: []
+		};
+
+		return callback(null, mixin);
+	};
 
 	return LocalChangePassword;
 

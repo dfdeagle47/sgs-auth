@@ -26,7 +26,7 @@ module.exports = (function () {
 		}, config);
 
 		this.actions = {
-			// changePassword: new LocalChangePassword(config.changePassword),
+			changePassword: new LocalChangePassword(config.changePassword),
 			// resetPassword: new LocalResetPassword(config.resetPassword),
 			verifyEmail: new LocalVerifyEmail(config.verifyEmail),
 			register: new LocalRegister(config.register),
