@@ -75,8 +75,6 @@ module.exports = (function () {
 		'saveUser'
 	];
 
-	LocalResetPassword.prototype.parser = null;
-
 	LocalResetPassword.prototype.mapper = function (username, password, token, callback) {
 		var mixin = {
 			user: null,

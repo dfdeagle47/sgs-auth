@@ -1,16 +1,14 @@
-var SGSAuth = require('../src/sgs-auth');
+// var SGSAuth = require('../src/sgs-auth');
+var SGSAuth = require('./coverage/instrument/src/sgs-auth');
 
 var Delegates = require('./fixtures/delegates');
-var World = {
-	user: require('./fixtures/user')
-};
 
 var bodyParser = require('body-parser');
-var supertest = require('supertest');
 var passport = require('passport');
 var express = require('express');
 
-var request = supertest('http://localhost:8000');
+var localStrategyTests = require('./local-strategy-tests');
+var oauthStrategyTests = require('./oauth-strategy-tests');
 
 describe('Testing the auth. module:', function () {
 	'use strict';
@@ -18,6 +16,8 @@ describe('Testing the auth. module:', function () {
 
 	before('Initialising the module', function () {
 		global.sgsAuth = new SGSAuth(Delegates, {
+			facebook: {},
+			google: {},
 			bearer: {},
 			local: {}
 		});
@@ -109,173 +109,27 @@ describe('Testing the auth. module:', function () {
 			}
 		);
 
+		app.post(
+			'/auth/facebook/login',
+			global.sgsAuth.with('facebook', 'login')
+		);
+
+		app.post(
+			'/auth/google/login',
+			global.sgsAuth.with('google', 'login')
+		);
+
 		app.listen(8000)
 		.on('error', callback)
 		.on('listening', callback);
 	});
 
-	it('- register', function (callback) {
-		request
-		.post('/auth/local/register')
-		.send({
-			username: World.user.username,
-			password: World.user.password
-		})
-		.expect(200)
-		.end(function (e, res) {
-			if(e) {
-				return callback(e);
-			}
-
-			World.registerToken = res.body.token;
-			callback(null);
-		});
+	describe('Local Strategy:', function () {
+		localStrategyTests();
 	});
 
-	it('- verify email', function (callback) {
-		request
-		.post('/auth/local/verify_email')
-		.send({
-			username: World.user.username,
-			password: World.user.password,
-			token: World.registerToken
-		})
-		.expect(200)
-		.end(function (e, res) {
-			if(e) {
-				return callback(e);
-			}
-
-			World.apiToken = res.body.token;
-			callback(null);
-		});
-	});
-
-	it('- authorize', function (callback) {
-		request
-		.get('/auth/bearer/authorize')
-		.set('Authorization', 'bearer ' + World.apiToken)
-		.expect(200, callback);
-	});
-
-	it('- logout', function (callback) {
-		request
-		.get('/auth/bearer/logout')
-		.set('Authorization', 'bearer ' + World.apiToken)
-		.expect(200, callback);
-	});
-
-	it('- login', function (callback) {
-		request
-		.post('/auth/local/login')
-		.send({
-			username: World.user.username,
-			password: World.user.password
-		})
-		.expect(200)
-		.end(function (e, res) {
-			if(e) {
-				return callback(e);
-			}
-
-			World.apiToken = res.body.token;
-			callback(null);
-		});
-	});
-
-	it('- change password', function (callback) {
-		request
-		.post('/auth/local/change_password')
-		.set('Authorization', 'bearer ' + World.apiToken)
-		.send({
-			username: World.user.username,
-			password: World.user.password,
-			newPassword: World.user.newPassword
-		})
-		.expect(200)
-		.end(function (e, res) {
-			if(e) {
-				return callback(e);
-			}
-
-			World.apiToken = res.body.token;
-			callback(null);
-		});
-	});
-
-	it('- logout', function (callback) {
-		request
-		.get('/auth/bearer/logout')
-		.set('Authorization', 'bearer ' + World.apiToken)
-		.expect(200, callback);
-	});
-
-	it('- login with new password', function (callback) {
-		request
-		.post('/auth/local/login')
-		.send({
-			username: World.user.username,
-			password: World.user.newPassword
-		})
-		.expect(200)
-		.end(function (e, res) {
-			if(e) {
-				return callback(e);
-			}
-
-			World.apiToken = res.body.token;
-			callback(null);
-		});
-	});
-
-	it('- logout', function (callback) {
-		request
-		.get('/auth/bearer/logout')
-		.set('Authorization', 'bearer ' + World.apiToken)
-		.expect(200, callback);
-	});
-
-	it('- forgot password', function (callback) {
-		request
-		.post('/auth/local/forgot_password')
-		.send({
-			username: World.user.username
-		})
-		.expect(200)
-		.end(function (e, res) {
-			if(e) {
-				return callback(e);
-			}
-
-			World.resetToken = res.body.token;
-			callback(null);
-		});
-	});
-
-	it('- reset password', function (callback) {
-		request
-		.post('/auth/local/reset_password')
-		.send({
-			username: World.user.username,
-			password: World.user.password,
-			token: World.resetToken
-		})
-		.expect(200)
-		.end(function (e, res) {
-			if(e) {
-				return callback(e);
-			}
-
-			World.apiToken = res.body.token;
-			callback(null);
-		});
-	});
-
-	it('- authorize', function (callback) {
-		request
-		.get('/auth/bearer/authorize')
-		.set('Authorization', 'bearer ' + World.apiToken)
-		.expect(200, callback);
+	describe('OAuth Strategy:', function () {
+		// oauthStrategyTests();
 	});
 
 });

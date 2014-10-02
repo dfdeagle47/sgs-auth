@@ -74,8 +74,6 @@ module.exports = (function () {
 		'saveUser'
 	];
 
-	LocalVerifyEmail.prototype.parser = null;
-
 	LocalVerifyEmail.prototype.mapper = function (username, password, token, callback) {
 		var mixin = {
 			user: null,

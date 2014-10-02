@@ -29,8 +29,6 @@ module.exports = (function () {
 		'validateState'
 	];
 
-	BearerAuthorize.prototype.parser = null;
-
 	BearerAuthorize.prototype.mapper = function (token, callback) {
 		var mixin = {
 			user: null,

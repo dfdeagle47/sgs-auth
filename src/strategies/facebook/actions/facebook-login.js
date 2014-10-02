@@ -10,26 +10,51 @@ module.exports = (function () {
 
 		this.config = _.extend({}, config);
 
-		this.name = 'google-login';
-
-		passport.use(
-			'facebook-login',
-			new PassportFacebook(
-				config,
-				this.run.bind(this)
-			)
-		);
-
-		return passport.authenticate(this.name, {
-			session: false
-		});
-
 	}
 
-	FacebookLogin.prototype.run = function (accessToken, refreshToken, rawToken, profile, callback) {
-		callback(null, false);
-	};
+	FacebookLogin.prototype.passportStrategy = PassportFacebook;
 
+	FacebookLogin.prototype.name = 'facebook-login';
+
+	FacebookLogin.prototype.stateIn = [
+		'registered'
+	];
+
+	FacebookLogin.prototype.stateOut = 'registered';
+
+	FacebookLogin.prototype.steps = [
+		'findUserByOAuthID',
+
+		'validateState',
+
+		'comparePassword',
+
+		'createToken',
+		'hashToken',
+		'addBearerAccount',
+		'removeInvalidTokens',
+
+		'updateState',
+
+		'saveUser'
+	];
+
+	FacebookLogin.prototype.mapper = function (username, password, callback) {
+		var mixin = {
+			user: null,
+			specs: {
+				stateIn: this.stateIn,
+				stateOut: this.stateOut
+			},
+			data: {
+				username: username,
+				password: password
+			},
+			accounts: []
+		};
+
+		return callback(null, mixin);
+	};
 	return FacebookLogin;
 
 })();

@@ -36,8 +36,6 @@ module.exports = (function () {
 		'saveUser'
 	];
 
-	BearerLogout.prototype.parser = null;
-
 	BearerLogout.prototype.mapper = function (token, callback) {
 		var mixin = {
 			user: null,

@@ -38,8 +38,6 @@ module.exports = (function () {
 		'createUser'
 	];
 
-	LocalRegister.prototype.parser = null;
-
 	LocalRegister.prototype.mapper = function (username, password, callback) {
 		var mixin = {
 			user: null,

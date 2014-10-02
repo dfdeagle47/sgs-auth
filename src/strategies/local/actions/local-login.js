@@ -38,8 +38,6 @@ module.exports = (function () {
 		'saveUser'
 	];
 
-	LocalLogin.prototype.parser = null;
-
 	LocalLogin.prototype.mapper = function (username, password, callback) {
 		var mixin = {
 			user: null,

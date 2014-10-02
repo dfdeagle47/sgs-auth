@@ -81,7 +81,6 @@ module.exports = (function () {
 			async.waterfall(
 				[].concat(
 					initializer,
-					// action.parser.bind(action),
 					action.mapper.bind(action),
 					steps
 				),
