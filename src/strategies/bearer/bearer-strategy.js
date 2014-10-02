@@ -2,9 +2,10 @@ var BearerAuthorize = require('./actions/bearer-authorize');
 var BearerLogout = require('./actions/bearer-logout');
 
 var BearerRemoveInvalidTokens = require('./steps/bearer-remove-invalid-tokens');
+var BearerRemoveAccounts = require('./steps/bearer-remove-accounts');
+var BearerRemoveAccount = require('./steps/bearer-remove-account');
 var BearerCompareToken = require('./steps/bearer-compare-token');
 var BearerCreateToken = require('./steps/bearer-create-token');
-var BearerRemoveToken = require('./steps/bearer-remove-token');
 var BearerAddAccount = require('./steps/bearer-add-account');
 var BearerHashToken = require('./steps/bearer-hash-token');
 
@@ -29,10 +30,11 @@ module.exports = (function () {
 
 		this.steps = {
 			removeInvalidTokens: new BearerRemoveInvalidTokens({}),
+			removeBearerAccounts: new BearerRemoveAccounts({}),
+			removeBearerAccount: new BearerRemoveAccount({}),
 			addBearerAccount: new BearerAddAccount({}),
 			compareToken: new BearerCompareToken({}),
 			createToken: new BearerCreateToken({}),
-			removeToken: new BearerRemoveToken({}),
 			hashToken: new BearerHashToken({})
 		};
 

@@ -28,7 +28,7 @@ module.exports = (function () {
 
 		'validateState',
 
-		'removeToken',
+		'removeBearerAccount',
 		'removeInvalidTokens',
 
 		'updateState',

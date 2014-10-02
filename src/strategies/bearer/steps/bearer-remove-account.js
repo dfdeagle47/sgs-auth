@@ -3,7 +3,7 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	function BearerRemoveToken (config) {
+	function BearerRemoveAccount (config) {
 
 		config = _.extend({}, config);
 
@@ -11,7 +11,7 @@ module.exports = (function () {
 			var hashedToken = mixin.data.tokenHash;
 
 			mixin.accounts = mixin.accounts.filter(function (account) {
-				return account.token !== hashedToken;
+				return !(account.token === hashedToken && account.strategy === 'bearer');
 			});
 
 			callback(null, mixin);
@@ -19,6 +19,6 @@ module.exports = (function () {
 
 	}
 
-	return BearerRemoveToken;
+	return BearerRemoveAccount;
 
 })();

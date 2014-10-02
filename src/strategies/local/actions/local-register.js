@@ -25,6 +25,7 @@ module.exports = (function () {
 		'findUserByUsername',
 
 		'hashPassword',
+		'removeLocalAccount',
 		'addLocalAccount',
 
 		'createToken',

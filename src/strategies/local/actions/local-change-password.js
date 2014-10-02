@@ -60,6 +60,7 @@ module.exports = (function () {
 		'validateState',
 
 		'comparePassword',
+		'removeLocalAccount',
 
 		'hashPassword',
 		'addLocalAccount',

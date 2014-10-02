@@ -61,7 +61,9 @@ module.exports = (function () {
 		'comparePassword',
 
 		'compareToken',
+		'removeBearerAccount',
 	
+		'removeBearerAccounts',
 		'createToken',
 		'hashToken',
 		'addBearerAccount',
