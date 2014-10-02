@@ -16,7 +16,7 @@ describe('Testing the auth. module:', function () {
 
 
 	before('Initialising the module', function () {
-		global.sgsAuth = new SGSAuth(Delegates, {
+		SGSAuth.init(Delegates, {
 			facebook: OAuthKeys.facebook,
 			google: OAuthKeys.google,
 			bearer: {},
@@ -35,7 +35,7 @@ describe('Testing the auth. module:', function () {
 
 		app.post(
 			'/auth/local/register',
-			global.sgsAuth.with('local', 'register'),
+			SGSAuth.with('local', 'register'),
 			function (req, res) {
 				res.status(200).json({
 					token: req.user.data.token
@@ -45,7 +45,7 @@ describe('Testing the auth. module:', function () {
 
 		app.post(
 			'/auth/local/verify_email',
-			global.sgsAuth.with('local', 'verifyEmail'),
+			SGSAuth.with('local', 'verifyEmail'),
 			function (req, res) {
 				res.status(200).json({
 					token: req.user.data.token
@@ -55,7 +55,7 @@ describe('Testing the auth. module:', function () {
 
 		app.get(
 			'/auth/bearer/authorize',
-			global.sgsAuth.with('bearer', 'authorize'),
+			SGSAuth.with('bearer', 'authorize'),
 			function (req, res) {
 				res.status(200).end();
 			}
@@ -63,7 +63,7 @@ describe('Testing the auth. module:', function () {
 
 		app.get(
 			'/auth/bearer/logout',
-			global.sgsAuth.with('bearer', 'logout'),
+			SGSAuth.with('bearer', 'logout'),
 			function (req, res) {
 				res.status(200).end();
 			}
@@ -71,7 +71,7 @@ describe('Testing the auth. module:', function () {
 
 		app.post(
 			'/auth/local/login',
-			global.sgsAuth.with('local', 'login'),
+			SGSAuth.with('local', 'login'),
 			function (req, res) {
 				res.status(200).json({
 					token: req.user.data.token
@@ -81,8 +81,8 @@ describe('Testing the auth. module:', function () {
 
 		app.post(
 			'/auth/local/change_password',
-			global.sgsAuth.with('bearer', 'authorize'),
-			global.sgsAuth.with('local', 'changePassword'),
+			SGSAuth.with('bearer', 'authorize'),
+			SGSAuth.with('local', 'changePassword'),
 			function (req, res) {
 				res.status(200).json({
 					token: req.user.data.token
@@ -92,7 +92,7 @@ describe('Testing the auth. module:', function () {
 
 		app.post(
 			'/auth/local/forgot_password',
-			global.sgsAuth.with('local', 'forgotPassword'),
+			SGSAuth.with('local', 'forgotPassword'),
 			function (req, res) {
 				res.status(200).json({
 					token: req.user.data.token
@@ -102,7 +102,7 @@ describe('Testing the auth. module:', function () {
 
 		app.post(
 			'/auth/local/reset_password',
-			global.sgsAuth.with('local', 'resetPassword'),
+			SGSAuth.with('local', 'resetPassword'),
 			function (req, res) {
 				res.status(200).json({
 					token: req.user.data.token
@@ -112,22 +112,22 @@ describe('Testing the auth. module:', function () {
 
 		app.get(
 			'/auth/facebook/login',
-			global.sgsAuth.with('facebook', 'login')
+			SGSAuth.with('facebook', 'login')
 		);
 
 		app.get(
 			'/auth/facebook/login_callback',
-			global.sgsAuth.with('facebook', 'login')
+			SGSAuth.with('facebook', 'login')
 		);
 
 		app.get(
 			'/auth/google/login',
-			global.sgsAuth.with('google', 'login')
+			SGSAuth.with('google', 'login')
 		);
 
 		app.get(
 			'/auth/google/login_callback',
-			global.sgsAuth.with('google', 'login')
+			SGSAuth.with('google', 'login')
 		);
 
 		app.listen(8000)

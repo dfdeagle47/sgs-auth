@@ -12,7 +12,9 @@ var _ = require('underscore');
 module.exports = (function () {
 	'use strict';
 
-	function SGSAuth (Delegates, config) {
+	function SGSAuth () {}
+
+	SGSAuth.prototype.init = function (Delegates, config) {
 
 		var me = this;
 
@@ -57,7 +59,7 @@ module.exports = (function () {
 			});
 		});
 
-	}
+	};
 
 	SGSAuth.prototype.with = function (strategyName, actionName) {
 		return passport.authenticate(strategyName + '-' + actionName, {
@@ -89,6 +91,6 @@ module.exports = (function () {
 		};
 	};
 
-	return SGSAuth;
+	return new SGSAuth();
 
 })();
