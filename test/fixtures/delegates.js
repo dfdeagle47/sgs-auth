@@ -22,7 +22,7 @@ module.exports = (function () {
 			}
 			else {
 				user = {};
-				user.state = mixin.stateOut;
+				user.state = 'initial';
 				user.id = Users.length;
 
 				Users.push(user);

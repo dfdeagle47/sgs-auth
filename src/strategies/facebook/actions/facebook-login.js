@@ -25,6 +25,8 @@ module.exports = (function () {
 	FacebookLogin.prototype.steps = [
 		'findOrCreateUserByOAuthId',
 
+		'addFacebookAccount',
+
 		'createToken',
 		'hashToken',
 		'addBearerAccount',

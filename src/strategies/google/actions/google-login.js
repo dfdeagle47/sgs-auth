@@ -24,6 +24,8 @@ module.exports = (function () {
 	GoogleLogin.prototype.steps = [
 		'findOrCreateUserByOAuthId',
 
+		'addGoogleAccount',
+
 		'createToken',
 		'hashToken',
 		'addBearerAccount',

@@ -1,5 +1,7 @@
 var FacebookLogin = require('./actions/facebook-login');
 
+var FacebookAddAccount = require('./steps/facebook-add-account.js');
+
 var _ = require('underscore');
 
 module.exports = (function () {
@@ -15,6 +17,10 @@ module.exports = (function () {
 
 		this.actions = {
 			login: new FacebookLogin(config.login)
+		};
+
+		this.steps = {
+			addFacebookAccount: new FacebookAddAccount()
 		};
 
 	}

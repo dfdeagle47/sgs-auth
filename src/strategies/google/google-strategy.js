@@ -1,5 +1,7 @@
 var GoogleLogin = require('./actions/google-login');
 
+var GoogleAddAccount = require('./steps/google-add-account.js');
+
 var _ = require('underscore');
 
 module.exports = (function () {
@@ -15,6 +17,10 @@ module.exports = (function () {
 
 		this.actions = {
 			login: new GoogleLogin(config.login)
+		};
+
+		this.steps = {
+			addGoogleAccount: new GoogleAddAccount()
 		};
 
 	}

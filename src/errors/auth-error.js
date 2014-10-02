@@ -8,16 +8,16 @@ module.exports = (function () {
 
 		Error.call(this);
 
-		this.type = 'AuthError';
-
-		properties = _.extend({
-			step: null,
-			action: null,
-			message: null,
-			strategy: null
-		}, properties);
-
-		_.extend(this, properties);
+		_.extend(
+			this,
+			_.defaults(properties, {
+				type: 'AuthError',
+				step: null,
+				action: null,
+				message: null,
+				strategy: null
+			})
+		);
 
 	}
 

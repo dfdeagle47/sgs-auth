@@ -12,7 +12,7 @@ module.exports = (function () {
 			// Local strategy accounts don't expire.
 			var expiration = new Date(8640000000000000);
 
-			var newBearerAccount = {
+			var newLocalAccount = {
 				expiration: expiration,
 				strategy: 'local',
 
@@ -22,7 +22,7 @@ module.exports = (function () {
 
 			mixin.stateOut = 'initial';
 
-			mixin.accounts.push(newBearerAccount);
+			mixin.accounts.push(newLocalAccount);
 
 			callback(null, mixin);
 		};
