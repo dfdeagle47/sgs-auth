@@ -43,10 +43,11 @@ module.exports = (function () {
 
 	LocalForgotPassword.prototype.stateIn = [
 		'registered',
-		'registering'
+		'registering',
+		'forgotPassword'
 	];
 
-	LocalForgotPassword.prototype.stateOut = 'registering';
+	LocalForgotPassword.prototype.stateOut = 'forgotPassword';
 
 	LocalForgotPassword.prototype.steps = [
 		'findUserByUsername',

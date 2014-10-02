@@ -48,7 +48,7 @@ module.exports = (function () {
 	LocalResetPassword.prototype.name = 'local-resetPassword';
 
 	LocalResetPassword.prototype.stateIn = [
-		'registering'
+		'forgotPassword'
 	];
 
 	LocalResetPassword.prototype.stateOut = 'registered';
