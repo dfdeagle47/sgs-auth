@@ -5,6 +5,36 @@ module.exports = (function () {
 
 	return {
 
+		findOrCreateUserByOAuthId: function (mixin, callback) {
+			var provider = mixin.data.profile.provider;
+			var oauthId = mixin.data.oauthId;
+
+			var users = Users.filter(function (user) {
+				return !!user.accounts.filter(function (account) {
+					return account.oauthId === oauthId && account.strategy === provider;
+				}).length;
+			});		
+
+			var user = null;	
+
+			if(users && users.length) {
+				user = users[0];
+			}
+			else {
+				user = {};
+				user.state = mixin.stateOut;
+				user.id = Users.length;
+
+				Users.push(user);
+			}
+
+			// mixin.accounts = user.accounts;
+			mixin.stateIn = user.state;
+			mixin.user = user;
+
+			callback(null, mixin);
+		},
+
 		findUserByUsername: function (mixin, callback) {
 			var username = mixin.data.username;
 

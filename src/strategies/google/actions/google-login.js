@@ -22,11 +22,7 @@ module.exports = (function () {
 	GoogleLogin.prototype.stateOut = 'registered';
 
 	GoogleLogin.prototype.steps = [
-		'findUserByUsername',
-
-		'validateState',
-
-		'comparePassword',
+		'findOrCreateUserByOAuthId',
 
 		'createToken',
 		'hashToken',
@@ -38,7 +34,7 @@ module.exports = (function () {
 		'saveUser'
 	];
 
-	GoogleLogin.prototype.mapper = function (username, password, callback) {
+	GoogleLogin.prototype.mapper = function (accessToken, refreshToken, rawResponse, profile, callback) {
 		var mixin = {
 			user: null,
 			specs: {
@@ -46,8 +42,11 @@ module.exports = (function () {
 				stateOut: this.stateOut
 			},
 			data: {
-				username: username,
-				password: password
+				oauthId: profile.id,
+				profile: profile,
+				expiration: rawResponse.expires_in,
+				accessToken: rawResponse.accessToken,
+				refreshToken: rawResponse.refreshToken
 			},
 			accounts: []
 		};

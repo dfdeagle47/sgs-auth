@@ -1,6 +1,7 @@
 // var SGSAuth = require('../src/sgs-auth');
 var SGSAuth = require('./coverage/instrument/src/sgs-auth');
 
+var OAuthKeys = require('./fixtures/oauth-keys');
 var Delegates = require('./fixtures/delegates');
 
 var bodyParser = require('body-parser');
@@ -16,8 +17,8 @@ describe('Testing the auth. module:', function () {
 
 	before('Initialising the module', function () {
 		global.sgsAuth = new SGSAuth(Delegates, {
-			facebook: {},
-			google: {},
+			facebook: OAuthKeys.facebook,
+			google: OAuthKeys.google,
 			bearer: {},
 			local: {}
 		});
@@ -109,13 +110,23 @@ describe('Testing the auth. module:', function () {
 			}
 		);
 
-		app.post(
+		app.get(
 			'/auth/facebook/login',
 			global.sgsAuth.with('facebook', 'login')
 		);
 
-		app.post(
+		app.get(
+			'/auth/facebook/login_callback',
+			global.sgsAuth.with('facebook', 'login')
+		);
+
+		app.get(
 			'/auth/google/login',
+			global.sgsAuth.with('google', 'login')
+		);
+
+		app.get(
+			'/auth/google/login_callback',
 			global.sgsAuth.with('google', 'login')
 		);
 
@@ -129,7 +140,7 @@ describe('Testing the auth. module:', function () {
 	});
 
 	describe('OAuth Strategy:', function () {
-		// oauthStrategyTests();
+		oauthStrategyTests();
 	});
 
 });

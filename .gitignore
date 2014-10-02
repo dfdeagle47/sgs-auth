@@ -31,3 +31,6 @@ node_modules
 
 ### Test reports ###
 test/coverage
+
+### OAuth test keys ###
+test/fixtures/oauth-keys.json

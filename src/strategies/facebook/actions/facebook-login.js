@@ -23,11 +23,7 @@ module.exports = (function () {
 	FacebookLogin.prototype.stateOut = 'registered';
 
 	FacebookLogin.prototype.steps = [
-		'findUserByOAuthID',
-
-		'validateState',
-
-		'comparePassword',
+		'findOrCreateUserByOAuthId',
 
 		'createToken',
 		'hashToken',
@@ -39,7 +35,7 @@ module.exports = (function () {
 		'saveUser'
 	];
 
-	FacebookLogin.prototype.mapper = function (username, password, callback) {
+	FacebookLogin.prototype.mapper = function (accessToken, refreshToken, rawResponse, profile, callback) {
 		var mixin = {
 			user: null,
 			specs: {
@@ -47,14 +43,18 @@ module.exports = (function () {
 				stateOut: this.stateOut
 			},
 			data: {
-				username: username,
-				password: password
+				oauthId: profile.id,
+				profile: profile,
+				expiration: rawResponse.expires_in,
+				accessToken: rawResponse.accessToken,
+				refreshToken: rawResponse.refreshToken
 			},
 			accounts: []
 		};
 
 		return callback(null, mixin);
 	};
+
 	return FacebookLogin;
 
 })();

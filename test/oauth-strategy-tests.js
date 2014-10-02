@@ -16,5 +16,4 @@ module.exports = function () {
 		.expect(302, callback);
 	});
 
-
 };
