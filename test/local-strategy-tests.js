@@ -82,7 +82,6 @@ module.exports = function () {
 		.post('/auth/local/change_password')
 		.set('Authorization', 'bearer ' + World.apiToken)
 		.send({
-			username: World.user.username,
 			password: World.user.password,
 			newPassword: World.user.newPassword
 		})

@@ -23,7 +23,7 @@ module.exports = (function () {
 			else {
 				user = {};
 				user.state = 'initial';
-				user.id = Users.length;
+				user._id = Users.length;
 
 				Users.push(user);
 			}
@@ -83,11 +83,33 @@ module.exports = (function () {
 			callback(null, mixin);
 		},
 
+		findUserById: function (mixin, callback) {
+			var _id = mixin.data._id;
+
+			var users = Users.filter(function (user) {
+				return user._id === _id;
+			});
+
+			if(!(users && users.length)) {
+				// return callback('NO_USER');
+				return callback(null, mixin);
+			}
+
+			var user = users[0];
+
+			mixin.accounts = user.accounts;
+			mixin.stateIn = user.state;
+
+			mixin.user = user;
+
+			callback(null, mixin);
+		},
+
 		createUser: function (mixin, callback) {
 			var user = {};
 			user.accounts = mixin.accounts;
 			user.state = mixin.stateOut;
-			user.id = Users.length;
+			user._id = Users.length;
 
 			Users.push(user);
 
@@ -101,7 +123,7 @@ module.exports = (function () {
 			user.accounts = mixin.accounts;
 			user.state = mixin.stateOut;
 
-			Users[user.id] = user;
+			Users[user._id] = user;
 
 			mixin.user = user;
 
