@@ -1,4 +1,5 @@
 var BearerAuthorize = require('./actions/bearer-authorize');
+var BearerSocket = require('./actions/bearer-socket');
 var BearerLogout = require('./actions/bearer-logout');
 
 var BearerRemoveInvalidTokens = require('./steps/bearer-remove-invalid-tokens');
@@ -16,15 +17,17 @@ module.exports = (function () {
 
 	function BearerStrategy (config) {
 
-		this.provider = 'google';
+		this.provider = 'bearer';
 
 		config = _.extend({
 			authorize: {},
+			socket: {},
 			logout: {}
 		}, config);
 
 		this.actions = {
 			authorize: new BearerAuthorize(config.authorize),
+			socket: new BearerSocket(config.socket),
 			logout: new BearerLogout(config.logout)
 		};
 
