@@ -19,7 +19,7 @@ module.exports = (function () {
 				token: mixin.data.tokenHash
 			};
 
-			mixin.accounts.push(newBearerAccount);
+			mixin.accounts.unshift(newBearerAccount);
 
 			callback(null, mixin);
 		};

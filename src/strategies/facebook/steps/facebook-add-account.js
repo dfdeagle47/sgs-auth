@@ -23,7 +23,7 @@ module.exports = (function () {
 
 				mixin.stateOut = 'registered';
 
-				mixin.accounts.push(newFacebookAccount);
+				mixin.accounts.unshift(newFacebookAccount);
 
 			}
 

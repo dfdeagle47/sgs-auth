@@ -23,7 +23,7 @@ module.exports = (function () {
 
 				mixin.stateOut = 'registered';
 
-				mixin.accounts.push(newGoogleAccount);
+				mixin.accounts.unshift(newGoogleAccount);
 
 			}
 

@@ -22,7 +22,7 @@ module.exports = (function () {
 
 			mixin.stateOut = 'initial';
 
-			mixin.accounts.push(newLocalAccount);
+			mixin.accounts.unshift(newLocalAccount);
 
 			callback(null, mixin);
 		};
