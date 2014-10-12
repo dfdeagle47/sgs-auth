@@ -36,7 +36,7 @@ module.exports = (function () {
 		'saveUser'
 	];
 
-	GoogleLogin.prototype.mapper = function (accessToken, rawResponse, profile, callback) {
+	GoogleLogin.prototype.mapper = function (accessToken, refreshToken, rawResponse, callback) {
 		var mixin = {
 			user: null,
 			specs: {
@@ -44,9 +44,9 @@ module.exports = (function () {
 				stateOut: this.stateOut
 			},
 			data: {
-				oauthId: profile.id,
-				profile: profile,
-				accessToken: rawResponse.accessToken,
+				oauthId: rawResponse.id,
+				profile: rawResponse,
+				accessToken: accessToken,
 			},
 			accounts: []
 		};
