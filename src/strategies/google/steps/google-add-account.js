@@ -8,7 +8,10 @@ module.exports = (function () {
 		config = _.extend({}, config);
 
 		return function (mixin, callback) {
-			var expiration = mixin.data.expiration;
+			// Expiration is set to a date very far in the future.
+			// Google strategy accounts should expire bug currently has a bug
+			// due to a new version of the Google OAuth API.
+			var expiration = new Date(8640000000000000);
 
 			if(mixin.stateIn === 'initial') {
 
@@ -18,7 +21,6 @@ module.exports = (function () {
 
 					oauthId: mixin.data.oauthId,
 					accessToken: mixin.data.accessToken,
-					refreshToken: mixin.data.refreshToken
 				};
 
 				mixin.stateOut = 'registered';

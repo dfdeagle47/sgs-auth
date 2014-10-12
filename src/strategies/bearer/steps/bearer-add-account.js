@@ -10,7 +10,7 @@ module.exports = (function () {
 		return function (mixin, callback) {
 			// Expiration is set at two weeks.
 			// This paramter will be configurable in the future.
-			var expiration = 1000 * 60 * 60 * 24 * 14;
+			var expiration = new Date(Date.now() + (1000 * 60 * 60 * 24 * 14));
 
 			var newBearerAccount = {
 				expiration: expiration,

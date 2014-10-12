@@ -16,7 +16,7 @@ module.exports = (function () {
 			mixin.accounts = mixin.accounts.filter(function (account) {
 				if(account.strategy === 'bearer') {
 
-					if(account.expiration < Date.now()) {
+					if(account.expiration > Date.now()) {
 						bearerAccounts.push(account);
 					}
 
