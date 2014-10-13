@@ -37,7 +37,7 @@ module.exports = (function () {
 		'saveUser'
 	];
 
-	FacebookLogin.prototype.mapper = function (accessToken, refreshToken, rawResponse, profile, callback) {
+	FacebookLogin.prototype.mapper = function (accessToken, refreshToken, rawResponse, callback) {
 		var mixin = {
 			user: null,
 			specs: {
@@ -45,11 +45,9 @@ module.exports = (function () {
 				stateOut: this.stateOut
 			},
 			data: {
-				oauthId: profile.id,
-				profile: profile,
-				expiration: rawResponse.expires_in,
-				accessToken: rawResponse.accessToken,
-				refreshToken: rawResponse.refreshToken
+				oauthId: rawResponse.id,
+				profile: rawResponse,
+				accessToken: accessToken,
 			},
 			accounts: []
 		};
