@@ -27,6 +27,8 @@ module.exports = (function () {
 
 		'addFacebookAccount',
 
+		'validateState',
+
 		'createToken',
 		'hashToken',
 		'addBearerAccount',
