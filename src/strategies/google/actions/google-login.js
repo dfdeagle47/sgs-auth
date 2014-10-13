@@ -26,8 +26,6 @@ module.exports = (function () {
 
 		'addGoogleAccount',
 
-		'validateState',
-
 		'createToken',
 		'hashToken',
 		'addBearerAccount',
