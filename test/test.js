@@ -37,7 +37,6 @@ describe('Testing the auth. module:', function () {
 			'/auth/local/register',
 			SGSAuth.with('local', 'register'),
 			function (req, res) {
-				console.log('DATA', req.auth);
 				res.status(200).json({
 					token: req.auth.token
 				});

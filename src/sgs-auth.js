@@ -66,11 +66,8 @@ module.exports = (function () {
 			return passport.authenticate(strategyName + '-' + actionName, {
 				session: false
 			})(req, res, function () {
-				req.auth = {};
 
-				if(req.user && req.user.data && req.user.data.token) {
-					req.auth.token = req.user.data.token;
-				}
+				req.auth = _.extend({}, req.user.data);
 
 				req.user = req.user.user;
 				delete req.user.user;
