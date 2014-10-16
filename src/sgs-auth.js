@@ -62,9 +62,22 @@ module.exports = (function () {
 	};
 
 	SGSAuth.prototype.with = function (strategyName, actionName) {
-		return passport.authenticate(strategyName + '-' + actionName, {
-			session: false
-		});
+		return function (req, res, next) {
+			return passport.authenticate(strategyName + '-' + actionName, {
+				session: false
+			})(req, res, function () {
+				req.auth = {};
+
+				if(req.user && req.user.data && req.user.data.token) {
+					req.auth.token = req.user.data.token;
+				}
+
+				req.user = req.user.user;
+				delete req.user.user;
+
+				next();
+			});
+		};
 	};
 
 	SGSAuth.prototype.run = function (action) {

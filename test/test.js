@@ -37,8 +37,9 @@ describe('Testing the auth. module:', function () {
 			'/auth/local/register',
 			SGSAuth.with('local', 'register'),
 			function (req, res) {
+				console.log('DATA', req.auth);
 				res.status(200).json({
-					token: req.user.data.token
+					token: req.auth.token
 				});
 			}
 		);
@@ -48,7 +49,7 @@ describe('Testing the auth. module:', function () {
 			SGSAuth.with('local', 'verifyEmail'),
 			function (req, res) {
 				res.status(200).json({
-					token: req.user.data.token
+					token: req.auth.token
 				});
 			}
 		);
@@ -74,7 +75,7 @@ describe('Testing the auth. module:', function () {
 			SGSAuth.with('local', 'login'),
 			function (req, res) {
 				res.status(200).json({
-					token: req.user.data.token
+					token: req.auth.token
 				});
 			}
 		);
@@ -85,7 +86,7 @@ describe('Testing the auth. module:', function () {
 			SGSAuth.with('local', 'changePassword'),
 			function (req, res) {
 				res.status(200).json({
-					token: req.user.data.token
+					token: req.auth.token
 				});
 			}
 		);
@@ -95,7 +96,7 @@ describe('Testing the auth. module:', function () {
 			SGSAuth.with('local', 'forgotPassword'),
 			function (req, res) {
 				res.status(200).json({
-					token: req.user.data.token
+					token: req.auth.token
 				});
 			}
 		);
@@ -105,7 +106,7 @@ describe('Testing the auth. module:', function () {
 			SGSAuth.with('local', 'resetPassword'),
 			function (req, res) {
 				res.status(200).json({
-					token: req.user.data.token
+					token: req.auth.token
 				});
 			}
 		);

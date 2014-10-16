@@ -21,7 +21,7 @@ module.exports = (function () {
 	util.inherits(PassportChangePassword, passport.Strategy);
 
 	PassportChangePassword.prototype.authenticate = function (req) {
-		var username = req.user.user.accounts.filter(function (account) {
+		var username = req.user.accounts.filter(function (account) {
 			return account.strategy === 'local';
 		})[0].username;
 		var password = req.body.password;
