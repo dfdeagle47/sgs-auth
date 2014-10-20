@@ -61,11 +61,11 @@ module.exports = (function () {
 
 	};
 
-	SGSAuth.prototype.with = function (strategyName, actionName, customCallback) {
+	SGSAuth.prototype.with = function (strategyName, actionName) {
 		return function (req, res, next) {
 			return passport.authenticate(strategyName + '-' + actionName, {
 				session: false
-			}, customCallback)(req, res, function (e) {
+			})(req, res, function (e) {
 				if (e) {
 					return next(e);
 				}
