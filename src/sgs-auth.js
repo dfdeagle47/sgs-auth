@@ -65,7 +65,10 @@ module.exports = (function () {
 		return function (req, res, next) {
 			return passport.authenticate(strategyName + '-' + actionName, {
 				session: false
-			})(req, res, function () {
+			})(req, res, function (e) {
+				if (e) {
+					return next(e);
+				}
 
 				req.auth = _.extend({}, req.user.data);
 
