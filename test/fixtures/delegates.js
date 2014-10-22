@@ -36,6 +36,10 @@ module.exports = (function () {
 		},
 
 		findUserByUsername: function (mixin, callback) {
+			var isRegister = false;
+			if(mixin.specs.stateIn[0] === 'initial') {
+				isRegister = true;
+			}
 			var username = mixin.data.username;
 
 			var users = Users.filter(function (user) {
@@ -47,6 +51,10 @@ module.exports = (function () {
 			if(!(users && users.length)) {
 				// return callback('NO_USER');
 				return callback(null, mixin);
+			}
+
+			if(isRegister) {
+				return callback('USER_EXISTS');
 			}
 
 			var user = users[0];
