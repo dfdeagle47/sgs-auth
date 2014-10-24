@@ -1,5 +1,4 @@
 var PassportFacebook = require('passport-facebook').Strategy;
-var passport = require('passport');
 
 var _ = require('underscore');
 

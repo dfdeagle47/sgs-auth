@@ -44,6 +44,16 @@ describe('Testing the auth. module:', function () {
 		);
 
 		app.post(
+			'/auth/local/easy-register',
+			SGSAuth.with('local', 'easyRegister'),
+			function (req, res) {
+				res.status(200).json({
+					token: req.auth.token
+				});
+			}
+		);
+
+		app.post(
 			'/auth/local/verify_email',
 			SGSAuth.with('local', 'verifyEmail'),
 			function (req, res) {

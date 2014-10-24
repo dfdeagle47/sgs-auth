@@ -1,6 +1,7 @@
 var LocalForgotPassword = require('./actions/local-forgot-password');
 var LocalChangePassword = require('./actions/local-change-password');
 var LocalResetPassword = require('./actions/local-reset-password');
+var LocalEasyRegister = require('./actions/local-easy-register');
 var LocalVerifyEmail = require('./actions/local-verify-email');
 var LocalRegister = require('./actions/local-register');
 var LocalLogin = require('./actions/local-login');
@@ -32,6 +33,7 @@ module.exports = (function () {
 			forgotPassword: new LocalForgotPassword(config.forgotPassword),
 			changePassword: new LocalChangePassword(config.changePassword),
 			resetPassword: new LocalResetPassword(config.resetPassword),
+			easyRegister: new LocalEasyRegister(config.easyRegister),
 			verifyEmail: new LocalVerifyEmail(config.verifyEmail),
 			register: new LocalRegister(config.register),
 			login: new LocalLogin(config.login)

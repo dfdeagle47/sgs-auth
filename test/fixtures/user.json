@@ -2,5 +2,8 @@
 	"password": "hello",
 	"username": "test@example.com",
 
-	"newPassword": "world"
+	"newPassword": "world",
+
+	"easyPassword": "easy",
+	"easyUsername": "easy@example.com"
 }

@@ -59,6 +59,38 @@ module.exports = function () {
 		.expect(200, callback);
 	});
 
+	it('- easy register', function (callback) {
+		request
+		.post('/auth/local/easy-register')
+		.send({
+			username: World.user.easyUsername,
+			password: World.user.easyPassword
+		})
+		.expect(200)
+		.end(function (e, res) {
+			if(e) {
+				return callback(e);
+			}
+
+			World.easyApiToken = res.body.token;
+			callback(null);
+		});
+	});
+
+	it('- easy authorize', function (callback) {
+		request
+		.get('/auth/bearer/authorize')
+		.set('Authorization', 'bearer ' + World.easyApiToken)
+		.expect(200, callback);
+	});
+
+	it('- easy logout', function (callback) {
+		request
+		.get('/auth/bearer/logout')
+		.set('Authorization', 'bearer ' + World.easyApiToken)
+		.expect(200, callback);
+	});
+
 	it('- login', function (callback) {
 		request
 		.post('/auth/local/login')
