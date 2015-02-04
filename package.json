@@ -1,7 +1,7 @@
 {
 	"name": "sgs-auth",
 	"private": true,
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "Sagacify's server-side authentication and authorization module.",
 	"main": "src/sgs-auth.js",
 	"scripts": {
@@ -11,7 +11,7 @@
 		"async": "~0.2.5",
 		"underscore": "~1.7.0",
 
-		"sgs-crypto": "git+ssh://git@github.com:Sagacify/sgs-crypto.git",
+		"sgs-crypto": "git+ssh://git@github.com:Sagacify/sgs-crypto.git#1.0.0",
 
 		"passport-google-oauth": "~0.1.5",
 		"passport-http-bearer": "~1.0.1",
